@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<p style="font-size:24px"><b>12-Tone Matrix Generator</b></p>
+</head>
+<body>
+
+<p>
+Use this tool to generate a 12-tone matrix from a row that you input.  You can use either pitch class integers or note names to enter the row.
+<br/>
+<br/><i>Don't use the characters <b>a</b>, <b>b</b>, <b>t</b>, or <b>e</b> for pitch classes 10 or 11!</i>
+<br/>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example: 10,5,0,11,9,6,1,3,7,8,2,4
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example: Bb,F,C,B,A,F#,C#,D#,G,Ab,D,E
+<hr/>
+</p>
+
+Display as:
+<select id="menu_display" onchange="updateMatrix()">
+	<option selected="selected">Pitch Class Integers</option>
+	<option>Note Names (with Sharps)</option>
+	<option>Note Names (with Flats)</option>
+</select>
+</br>
+</br>
+Enter a row: <input type="text" id="row" onkeyup="{validate_input(); validate_subset();}" onchange="{validate_input(); validate_subset();}" value="" size=50 autofocus>
+<button id="randomize" onclick="{
+function shuffle(o){
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
+document.getElementById('row').value=shuffle([0,1,2,3,4,5,6,7,8,9,10,11]).toString();
+validate_input();
+}
+">Random</button>
+</br>
+Find subset: <input type="text" id="subset" value="" onkeyup="{validate_input(); validate_subset();}" onchange="{validate_input(); validate_subset();}" size=50>
+<input type="checkbox" name="orderMatters" id="orderMattersCheckbox" onclick="updateMatrix()" checked>Order is important
+<br/>
+<br/>
+<input type="checkbox" name="rowAreas" id="rowAreasCheckbox" onclick="updateMatrix()">Find hexachordally-combinatorial row areas<br/>
+<hr/>
+
+<b><p id="error_msg", class="monospace", style="color:red"></p></b>
+<p id="matrix", class="monospace"></p>
+<p id="row_areas", class="monospace"></p>
+
+</body>
+
+<script src="./twelve-tone-matrix-generator.js" type="text/javascript"></script>
+</html>
