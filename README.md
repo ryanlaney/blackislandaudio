@@ -22,4 +22,4 @@ AWS_SECRET_ACCESS_KEY=XXXXX
 
 To deploy, simply run:
 
-`npx serverless`
+`npm run deploy:produciton`

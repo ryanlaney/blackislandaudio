@@ -6,6 +6,6 @@ plugins:
   - serverless-dotenv-plugin
 
 app:
-  component: "@sls-next/serverless-component@1.19.0-alpha.35" # it is recommended you pin the latest stable version of serverless-next.js
+  component: "@sls-next/serverless-component@3.6.0" # it is recommended you pin the latest stable version of serverless-next.js
   inputs:
     domain: ["blackislandaudio.com"]
