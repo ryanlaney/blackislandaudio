@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<p style="font-size:24px"><b>Set Analyzer</b></p>
+</head>
+<body>
+
+<p>Use this tool to analyze and compare pitch-class sets.  Enter sets using note names or pitch-class integers.  If you want to analyze contour, you'll need to tag on the octave number at the end of the note name.
+<br/>
+<br/><i>Don't use the characters <b>a</b>, <b>b</b>, <b>t</b>, or <b>e</b> for pitch classes 10 or 11!</i>
+<br/>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example: 0,1,5,6
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example: C,Db,F,Gb
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example: C4,Db5,F4,Gb3
+<hr/>
+</p>
+
+<span id="f">
+<table>
+<tr>
+<td align="right">
+Display Relations in
+</td>
+<td>
+<select id="menu_tables" onchange="main()">
+	<option>Tables</option>
+	<option>Lists</option>
+</select>
+</td>
+</tr>
+<tr>
+<td align="right">
+Show Sets As
+</td>
+<td>
+<select id="menu_sets" onchange="main()">
+	<option>Index Number</option>
+	<option>They're Entered Below</option>
+	<option>Normal Form</option>
+	<option selected="selected">Prime Form</option>
+	<option>Forte Number</option>
+	<option>Index Number + Normal Form</option>
+	<option>Index Number + Prime Form</option>
+	<option>Index Number + Forte Number</option>
+</select>
+</td>
+</tr>
+<tr>
+<td align="right">
+Show Pitch Sets As
+</td>
+<td>
+<select id="menu_psets" onchange="main()">
+	<option>Index Number</option>
+	<option>They're Entered Below</option>
+	<option selected="selected">Contour Class</option>
+	<option>Index Number + Contour Class</option>
+</select>
+</td>
+</tr>
+<tr>
+<td align="right">
+Prime Form Algorithm:
+</td>
+<td>
+<select id="menu_pfalgorithm" onchange="main()">
+	<option selected="selected">Rahn</option>
+	<option>Forte</option>
+</select>
+</td>
+</tr>
+</table>
+</br>
+<object>
+<table id="sets">
+<tr>
+<td></td>
+<td align="center">SET</td>
+<td align="center"></td>
+<td align="center">Enabled</td>
+</tr>
+<tr>
+<td>
+<b>1:</b>
+</td>
+<td>
+<input type="text" name="set_txt" value="" onkeyup="{pc_compatible();contour_compatible();}" onchange="{pc_compatible();contour_compatible();}" size=50 autofocus>
+</td>
+<td>
+<button name="set_btn" onclick="addSet()">+</button>
+</td>
+<td>
+<input type="checkbox" name="enableBtn" onclick="main()" checked disabled>
+</td>
+</tr>
+</table>
+</object>
+</span>
+<br/>
+<br/><u>Set Analysis</u><br/>
+<input type="checkbox" name="analysisType_BasicInfo" id="analysis_BasicInfo_NormalForm" checked disabled><button class="help" onclick="showHelp('Normal Form')">Normal Form</button>
+<input type="checkbox" name="analysisType_BasicInfo" id="analysis_BasicInfo_IntervalVector" checked disabled><button class="help" onclick="showHelp('Interval Vector')">Interval Vector</button>
+<input type="checkbox" name="analysisType_BasicInfo" id="analysis_BasicInfo_PrimeForm" checked disabled><button class="help" onclick="showHelp('Prime Form')">Prime Form</button>
+<input type="checkbox" name="analysisType_BasicInfo" id="analysis_BasicInfo_SetClass" checked disabled><button class="help" onclick="showHelp('Forte Number')">Forte Number</button>
+<br>
+<input type="checkbox" name="analysisType_BasicInfo" id="analysis_BasicInfo_InvarianceVector" disabled><button class="help" onclick="showHelp('Invariance Vector')">Invariance Vector</button>
+<input type="checkbox" name="analysisType_BasicInfo" id="analysis_BasicInfo_TranspositionalSymmetry" disabled><button class="help" onclick="showHelp('Transpositional Symmetry')">T<sub>n</sub>I Symmetry</button>
+<input type="checkbox" name="analysisType_BasicInfo" id="analysis_BasicInfo_SelfComplementary" disabled><button class="help" onclick="showHelp('Self-Complementary')">Self-complementary</button>
+<input type="checkbox" name="analysisType_BasicInfo" id="analysis_BasicInfo_Complement" disabled><button class="help" onclick="showHelp('Show Complement')">Complementary set</button>
+<input type="checkbox" name="analysisType_BasicInfo" id="analysis_BasicInfo_Z" disabled><button class="help" onclick="showHelp('Show Z')">Z-related set</button>
+<br/>
+<br/><u>Set Relations</u><br/>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_TnI" disabled><button class="help" onclick="showHelp('TnI')">T<sub>n</sub> / T<sub>n</sub>I relationship</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_Z" disabled><button class="help" onclick="showHelp('Z')">Z-relationship</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_M" disabled><button class="help" onclick="showHelp('M')">M-relationship</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_Complementary" disabled><button class="help" onclick="showHelp('Complementary')">Complementary relationship</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_Subset" disabled><button class="help" onclick="showHelp('Subset/Superset')">Subset/superset relationship</button>
+<br/>
+<button class="help" onclick="showHelp('Forte')">Forte:</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_R" disabled><button class="help" onclick="showHelp('R')">R</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_KKh" disabled><button class="help" onclick="showHelp('K/Kh')">K/Kh</button>
+<br/>
+<button class="help" onclick="showHelp('Morris')">Morris:</button>
+<!--<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_SIM" disabled><button class="help" onclick="showHelp('SIM')">SIM</button>-->
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_ASIM" disabled><button class="help" onclick="showHelp('ASIM')">ASIM</button>
+<!--<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_k" disabled><button class="help" onclick="showHelp('k')">k</button>-->
+<br/>
+<button class="help" onclick="showHelp('Lewin')">Lewin:</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_REL" disabled><button class="help" onclick="showHelp('REL')">REL</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_EMB" disabled><button class="help" onclick="showHelp('EMB')">EMB</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_COV" disabled><button class="help" onclick="showHelp('COV')">COV</button>
+<br/>
+<button class="help" onclick="showHelp('Rahn')">Rahn:</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_ak" disabled><button class="help" onclick="showHelp('ak')">ak</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_MAXSIM" disabled><button class="help" onclick="showHelp('MAXSIM')">MAXSIM</button>
+<!--<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_TMEMB" disabled><button class="help" onclick="showHelp('TMEMB')">TMEMB</button>-->
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_ATMEMB" disabled><button class="help" onclick="showHelp('ATMEMB')">ATMEMB</button>
+<br/>
+<button class="help" onclick="showHelp('Isaacson')">Isaacson:</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_IcVSIM" disabled><button class="help" onclick="showHelp('IcVSIM')">IcVSIM</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_ISIM2" disabled><button class="help" onclick="showHelp('ISIM2')">ISIM2</button>
+<br/>
+<button class="help" onclick="showHelp('Scott and Isaacson')">Scott and Isaacson:</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_Angle_rad" disabled><button class="help" onclick="showHelp('Angle')">Angle (radians)</button>
+<input type="checkbox" name="analysisType_Comparisons" id="analysis_Comparisons_Angle_deg" disabled><button class="help" onclick="showHelp('Angle')">Angle (degrees)</button>
+<br/>
+<br/><u>Contour Analysis</u><br/>
+<button class="help" onclick="showHelp('Friedman')">Friedman:</button>
+<input type="checkbox" name="analysisType_Contour" id="analysis_Contour_CC" disabled><button class="help" onclick="showHelp('CC')">CC</button>
+<input type="checkbox" name="analysisType_Contour" id="analysis_Contour_CAS" disabled><button class="help" onclick="showHelp('CAS')">CAS</button>
+<input type="checkbox" name="analysisType_Contour" id="analysis_Contour_CASV" disabled><button class="help" onclick="showHelp('CASV')">CASV</button>
+<input type="checkbox" name="analysisType_Contour" id="analysis_Contour_CIS" disabled><button class="help" onclick="showHelp('CIS')">CIS</button>
+<input type="checkbox" name="analysisType_Contour" id="analysis_Contour_CIA" disabled><button class="help" onclick="showHelp('CIA')">CIA</button>
+<input type="checkbox" name="analysisType_Contour" id="analysis_Contour_CCVI" disabled><button class="help" onclick="showHelp('CCV I')">CCV I</button>
+<input type="checkbox" name="analysisType_Contour" id="analysis_Contour_CCVII" disabled><button class="help" onclick="showHelp('CCV II')">CCV II</button>
+<br/>
+<button class="help" onclick="showHelp('Marvin and Laprade')">Marvin and Laprade:</button>
+<input type="checkbox" name="analysisType_Contour" id="analysis_Contour_COM" disabled><button class="help" onclick="showHelp('COM')">COM</button>
+<br/>
+<br/><u>Contour Relations</u><br/>
+<button class="help" onclick="showHelp('Marvin and Laprade')">Marvin and Laprade:</button>
+<input type="checkbox" name="analysisType_ContourComparisons" id="analysis_ContourComparisons_CSIM" disabled><button class="help" onclick="showHelp('CSIM')">CSIM</button>
+<input type="checkbox" name="analysisType_ContourComparisons" id="analysis_ContourComparisons_CEMB" disabled><button class="help" onclick="showHelp('CEMB')">CEMB</button>
+<!--<input type="checkbox" name="analysisType_ContourComparisons" id="analysis_ContourComparisons_CMEMB" disabled><button class="help" onclick="showHelp('CMEMB')">CMEMB</button>-->
+<input type="checkbox" name="analysisType_ContourComparisons" id="analysis_ContourComparisons_ACMEMB" disabled><button class="help" onclick="showHelp('ACMEMB')">ACMEMB</button>
+<br/>
+<br/>
+<button name="doit" onclick="main()">Analyze</button>
+
+<hr/>
+<br/>
+</b>
+<p id="help", style="font-family:courier;font-size:12px;background-color:#dddddd">
+<p id="output", class="monospace"></p>
+
+</body>
+
+<script src="./set-analyzer.js" type="text/javascript"></script>
+</html>
