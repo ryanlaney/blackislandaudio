@@ -31,13 +31,10 @@ const Footer: React.FC = () => (
                 <Grid container item md={6} spacing={4} style={{ alignItems: "center", alignContent: "center" }} xs={6}>
                     <Grid container item xs={12}>
                         <Grid item xs={12}>
-                            <Typography>6919 W Broward Blvd</Typography>
+                            <Typography>23 Vixen Rd</Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography>Suite 107</Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography>Plantation, FL 33317</Typography>
+                            <Typography>Trumbull, CT 06611</Typography>
                         </Grid>
                     </Grid>
                     <Grid container item spacing={1} xs={12}>
